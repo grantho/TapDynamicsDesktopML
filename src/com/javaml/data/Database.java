@@ -11,6 +11,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.javaml.FeatureUtils;
 
 public class Database {
 	// the DAO objects we use to access the taps table
@@ -19,7 +20,7 @@ public class Database {
 	private Dao<Person, Integer> personDao;
 	private Dao<AccelerometerData, Integer> accelDao;
 	
-	private final static String DATABASE_LOCATION = "jdbc:sqlite:test.db";
+	private final static String DATABASE_LOCATION = "jdbc:sqlite:C:/Users/Grant/Desktop/main.db";
 	private ConnectionSource connectionSource;
 
 	public Database() throws Exception {
@@ -35,15 +36,38 @@ public class Database {
 		TableUtils.createTableIfNotExists(connectionSource, Attempt.class);
 		TableUtils.createTableIfNotExists(connectionSource, Tap.class);
 		TableUtils.createTableIfNotExists(connectionSource, AccelerometerData.class);
+		
+		FeatureUtils.initFeatureUtils(personDao);
 	}
 	
-	/**
-	 * Reads sqlite database from file and initializes ORM/DAO objects
-	 * to access the database
-	 * @param path: path to sqlite db IN JAVA PROJECT FOLDER
-	 */
-	public void readDatabaseFromFile(String path) {
-		
+	public void printDatabase() throws SQLException{
+		//check out DB
+		List<Person> people = personDao.queryForAll();
+		for(Person p : people){
+
+			System.out.println("Person username: "+ p.getUsername());
+			System.out.println("  pin: "+ p.getPin());
+			System.out.println("  Has made " + p.getAttempts().size() + " attempts.");
+
+			/*
+			for(Attempt a : p.getAttempts()){
+				System.out.println("    Attempt " + a.getId());
+				System.out.println("    Mode:" + a.getMode());
+				for(Tap t : a.getTaps()){
+					Log.i("database","      Tap " + t.getId());
+					Log.i("database","      duration: " + t.getDuration());
+					Log.i("database","      latency: " + t.getLatency());
+					Log.i("database","      number pressed: " + t.getNumberPressed());
+					Log.i("database","      pressure: " + t.getPressure());
+					Log.i("database","      size: " + t.getSize());
+					Log.i("database","        Accelerometer Data");
+					for(AccelerometerData d : t.getAccelerometerData()){
+						System.out.println("        <"+d.getX()+","+d.getY()+","+d.getZ()+">");
+					}
+				}
+			} */
+		} 
+		System.out.println("There are *" + people.size() + "* users in the database.");
 	}
 	
 	public void addPerson(String user, int pin) throws SQLException {
@@ -56,6 +80,10 @@ public class Database {
 		return people.size();
 	}
 
+	public List<Person> getPeople(int pin) throws SQLException {
+		return personDao.queryForEq("pin", pin);
+	}
+	
 	public Person getPerson(String username) throws SQLException{
 		List<Person> results = personDao.queryForEq("username", username);
 		if(results.size() == 1) return results.get(0);
@@ -66,5 +94,11 @@ public class Database {
 		Person p = getPerson(username);
 		if(p == null) return 0;
 		else return p.getPin();
+	}
+	
+	public void closeDatabase() throws SQLException {
+		if (connectionSource != null) {
+			connectionSource.close();
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.javaml;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,7 +17,7 @@ import net.sf.javaml.classification.evaluation.PerformanceMeasure;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
-import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.dao.Dao;
 import com.javaml.data.AccelerometerData;
 import com.javaml.data.Attempt;
 import com.javaml.data.Person;
@@ -28,14 +29,16 @@ public class FeatureUtils {
 	public static final int NUM_ACCEL_FEATURES = 15;
 	public static final int NUM_NEG_EXAMPLES = 30;
 	public static final int NUM_TAPS = 5;
-	private static RuntimeExceptionDao<Person, Integer> personDao;
+	private static Dao<Person, Integer> personDao;
 
-	public static void initFeatureUtils(RuntimeExceptionDao<Person, Integer> pDao){
+	public static void initFeatureUtils(Dao<Person, Integer> pDao){
 		personDao = pDao;
 	}
 
 	public static void evaluateTestError(Classifier trainedClassifier, Dataset testData, String username) {
 		Map<Object, PerformanceMeasure> pm = EvaluateDataset.testDataset(trainedClassifier, testData);
+		String header = "\r\nEVALUATE_DATASET:: Test dataset results for person p = " + username + "\r\n";
+		Evaluator.writeToFile(Evaluator.FILENAME, header);
 		Evaluator.printPerformance(pm);
 		/*Map<Object, PerformanceMeasure> pm2 = Evaluator.crossValidate(testData, trainedClassifier);
 		Log.i("eval", "CrossValidate:: Test dataset results for person p = " + p.getUsername());
@@ -45,21 +48,23 @@ public class FeatureUtils {
 
 	public static void evaluateTrainError(Classifier trainedClassifier, Dataset trainData, String username) {
 		Map<Object, PerformanceMeasure> pm = EvaluateDataset.testDataset(trainedClassifier, trainData);
+		String header = "TRAINING dataset results for person p = " + username + "\r\n";
+		Evaluator.writeToFile(Evaluator.FILENAME, header);
 		Evaluator.printPerformance(pm);
 		/*Map<Object, PerformanceMeasure> pm2 = Evaluator.crossValidate(trainData, trainedClassifier);
 		Log.i("eval", "CrossValidate:: TRAIN results for person p = " + p.getUsername());
 		Evaluator.printPerformance(pm2);*/
 	}
 
-	public static Dataset makeTrainSet(Person p) {
+	public static Dataset makeTrainSet(Person p) throws SQLException {
 		return getDataSet(p, true);
 	}
 
-	public static Dataset makeTestSet(Person p) {
+	public static Dataset makeTestSet(Person p) throws SQLException {
 		return getDataSet(p, false);
 	}
 
-	private static Dataset getDataSet(Person user, boolean trainSet) {
+	private static Dataset getDataSet(Person user, boolean trainSet) throws SQLException {
 		Dataset dataset = new DefaultDataset();
 
 		makePosSet(user, trainSet, dataset);
@@ -105,7 +110,7 @@ public class FeatureUtils {
 		//Log.i("eval", "Num positive samples" + counter);
 	}
 
-	private static void makeNegSet(Person user, boolean trainSet, Dataset dataset) {
+	private static void makeNegSet(Person user, boolean trainSet, Dataset dataset) throws SQLException {
 		// get others with the same pin
 		List<Person> people = personDao.queryForEq("pin", user.getPin());
 
@@ -143,7 +148,7 @@ public class FeatureUtils {
 		//Log.i("eval", "Num negative samples" + counter);
 	}
 
-	public Dataset fullDataset(Person user) {
+	public Dataset fullDataset(Person user) throws SQLException {
 		Dataset dataset = new DefaultDataset();
 		String pin = "" + user.getPin();
 		int pinLength = pin.length() ;

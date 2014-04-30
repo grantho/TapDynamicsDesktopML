@@ -1,5 +1,7 @@
 package com.javaml;
 
+import java.sql.SQLException;
+
 import com.javaml.data.Attempt;
 import com.javaml.data.Person;
 
@@ -28,7 +30,7 @@ public class UserML {
 		normalizer.filter(inst);
 	}
 	
-	public void trainClassifier(Person user) {
+	public void trainClassifier(Person user) throws SQLException {
 		self = user;
 		
 		trainSet = FeatureUtils.makeTrainSet(self);
@@ -41,7 +43,7 @@ public class UserML {
 			testSet.add(inst);
 		}
 		
-		classifier = classifierSet.makeRandomForest(trainSet);
+		classifier = classifierSet.makeSvm(trainSet);
 	}
 	
 	public boolean classifyAttempt(Attempt attempt) {

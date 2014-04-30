@@ -1,5 +1,9 @@
 package com.javaml;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Map;
 
 import net.sf.javaml.classification.Classifier;
@@ -13,8 +17,30 @@ import net.sf.javaml.featureselection.scoring.KullbackLeiblerDivergence;
 import net.sf.javaml.featureselection.subset.GreedyForwardSelection;
 
 public class Evaluator {
-
 	private static final int FOLDS = 10;
+	public static final String FILENAME = "results.txt";
+	
+	public static void writeToFile(String fileName, String data) {
+		try{
+    		File file = new File(fileName);
+ 
+    		//if file doesnt exists, then create it
+    		if(!file.exists()){
+    			file.createNewFile();
+    		}
+ 
+    		//true = append file
+    		FileWriter fileWritter = new FileWriter(file.getName(), true);
+    	        BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+    	        bufferWritter.write(data);
+    	        bufferWritter.close();
+ 
+	        System.out.println("Done");
+ 
+    	}catch(IOException e){
+    		e.printStackTrace();
+    	}
+	}
 	
 	public static Map<Object, PerformanceMeasure> crossValidate(Dataset dataset, Classifier classifier){
 		CrossValidation cv = new CrossValidation(classifier);
@@ -26,12 +52,12 @@ public class Evaluator {
 	public static void printPerformance(Map<Object, PerformanceMeasure> performance){
 		for(Object key : performance.keySet()){
 			PerformanceMeasure p = performance.get(key);
-			System.out.println("Performance for class '" +key + "':");
-			System.out.println("  precision: " + p.getPrecision());
-			System.out.println("  recall: " + p.getRecall());
-			System.out.println("false negative rate: " + p.getFNRate());
-			System.out.println("false positive rate: " + p.getFPRate());
-			System.out.println("  accuracy: "+p.getAccuracy());
+			writeToFile(FILENAME, "Performance for class '" +key + "':\r\n");
+			writeToFile(FILENAME, "  precision: " + p.getPrecision() + "\r\n");
+			writeToFile(FILENAME, "  recall: " + p.getRecall() + "\r\n");
+			writeToFile(FILENAME, "false negative rate: " + p.getFNRate() + "\r\n");
+			writeToFile(FILENAME, "false positive rate: " + p.getFPRate()  + "\r\n");
+			writeToFile(FILENAME, "  accuracy: "+p.getAccuracy() + "\r\n");
 		}
 	}
 	
