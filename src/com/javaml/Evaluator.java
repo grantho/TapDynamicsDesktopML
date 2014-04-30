@@ -1,0 +1,80 @@
+package com.javaml;
+
+import java.util.Map;
+
+import net.sf.javaml.classification.Classifier;
+import net.sf.javaml.classification.evaluation.CrossValidation;
+import net.sf.javaml.classification.evaluation.PerformanceMeasure;
+import net.sf.javaml.core.Dataset;
+import net.sf.javaml.distance.PearsonCorrelationCoefficient;
+import net.sf.javaml.featureselection.ranking.RecursiveFeatureEliminationSVM;
+import net.sf.javaml.featureselection.scoring.GainRatio;
+import net.sf.javaml.featureselection.scoring.KullbackLeiblerDivergence;
+import net.sf.javaml.featureselection.subset.GreedyForwardSelection;
+
+public class Evaluator {
+
+	private static final int FOLDS = 10;
+	
+	public static Map<Object, PerformanceMeasure> crossValidate(Dataset dataset, Classifier classifier){
+		CrossValidation cv = new CrossValidation(classifier);
+		Map<Object, PerformanceMeasure> perf = cv.crossValidation(dataset, FOLDS);
+		//printPerformance(perf);
+		return perf;
+	}
+	
+	public static void printPerformance(Map<Object, PerformanceMeasure> performance){
+		for(Object key : performance.keySet()){
+			PerformanceMeasure p = performance.get(key);
+			System.out.println("Performance for class '" +key + "':");
+			System.out.println("  precision: " + p.getPrecision());
+			System.out.println("  recall: " + p.getRecall());
+			System.out.println("false negative rate: " + p.getFNRate());
+			System.out.println("false positive rate: " + p.getFPRate());
+			System.out.println("  accuracy: "+p.getAccuracy());
+		}
+	}
+	
+	public static void klDivergence(Dataset data){
+		KullbackLeiblerDivergence kl = new KullbackLeiblerDivergence();
+		System.out.println("Scoring features via KL divergence.");
+		kl.build(data);
+		for(int i = 0; i < kl.noAttributes(); i++){
+			System.out.println("Feature "+ i + ": "+ kl.score(i));
+		}
+	}
+	
+	public static void gainRatio(Dataset data){
+		GainRatio gain = new GainRatio();
+		System.out.println("Scoring features via KL divergence.");
+		gain.build(data);
+		for(int i = 0; i < gain.noAttributes(); i++){
+			System.out.println("Feature "+ i + ": "+ gain.score(i));
+		}
+	}
+	
+	public static void featureRanking(Dataset data) {
+		RecursiveFeatureEliminationSVM svmrfe = new RecursiveFeatureEliminationSVM(0.2);
+        /* Apply the algorithm to the data set */
+        svmrfe.build(data);
+        /* Print out the rank of each attribute */
+        for (int i = 0; i < svmrfe.noAttributes(); i++)
+            System.out.println("Rank for feature #" + i + " " + svmrfe.rank(i));
+	}
+	
+	public static void feaureSelection(Dataset data) {
+		GreedyForwardSelection ga = new GreedyForwardSelection(1, new PearsonCorrelationCoefficient());
+        /* Apply the algorithm to the data set */
+        ga.build(data);
+        /* Print out the attribute that has been selected */
+        System.out.println(ga.selectedAttributes().toString());
+	}
+	
+	public static void featureScores(Dataset data) {
+		GainRatio ga = new GainRatio();
+		ga.build(data);
+		for (int i = 0; i < ga.noAttributes(); i++) {
+			System.out.println("Feature " + i + " score: " + ga.score(i));
+		}
+	}
+}
