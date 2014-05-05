@@ -2,6 +2,8 @@ package com.javaml;
 
 import java.sql.SQLException;
 
+import libsvm.LibSVM;
+
 import com.javaml.data.Attempt;
 import com.javaml.data.Person;
 
@@ -15,7 +17,7 @@ public class UserML {
 	private Dataset trainSet;
 	private Dataset testSet;
 	private NormalizeMean normalizer;
-	private Classifier classifier;
+	private LibSVM classifier;
 	private TapClassifiers classifierSet;
 	private Person self;
 	
@@ -42,7 +44,8 @@ public class UserML {
 			normalizer.filter(inst);
 			testSet.add(inst);
 		}
-		
+
+		Evaluator.writeToFile(Evaluator.FILENAME, "\nTraining set size = " + trainSet.size());
 		classifier = classifierSet.makeSvm(trainSet);
 	}
 	
@@ -54,7 +57,7 @@ public class UserML {
 		String label;
 		if(result == 1) {
 			label = "pos";
-		} else if(result == -1) {
+		} else if(result == 0) {
 			label = "neg";
 		} else {
 			label = "wtf";
@@ -76,11 +79,11 @@ public class UserML {
 		this.testSet = testSet;
 	}
 
-	public Classifier getClassifier() {
+	public LibSVM getClassifier() {
 		return classifier;
 	}
 
-	public void setClassifier(Classifier classifier) {
+	public void setClassifier(LibSVM classifier) {
 		this.classifier = classifier;
 	}
 }
