@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import libsvm.LibSVM;
+
 import net.sf.javaml.core.Dataset;
 import net.sf.javaml.core.DefaultDataset;
 import net.sf.javaml.core.DenseInstance;
@@ -35,22 +37,74 @@ public class FeatureUtils {
 		personDao = pDao;
 	}
 
-	public static void evaluateTestError(Classifier trainedClassifier, Dataset testData, String username) {
-		Map<Object, PerformanceMeasure> pm = EvaluateDataset.testDataset(trainedClassifier, testData);
+	private static int tp, fp, tn, fn;
+	public static void clearResults() {
+		tp = 0;
+		fp = 0;
+		tn = 0;
+		fn = 0;
+	}
+	
+	public static void countPositives(){
+		
+	}
+	
+	public static void countNegatives() {
+		
+	}
+
+	public static void evaluateDataset(LibSVM trainedClassifier, Dataset testData, String username) {
+		clearResults();
+        /* Classify all instances and check with the correct class values */
+        for (Instance inst : testData) {
+            Object predictedClassValue = trainedClassifier.classify(inst);
+            Object realClassValue = inst.classValue();
+            
+            int realClass = (Integer) realClassValue;
+            if (predictedClassValue.equals(realClassValue)) {
+            	if (realClass == 1) {
+            		tp++;
+            	} else if (realClass == -1) {
+            		tn++;
+            	}
+            }
+            else {
+            	if (realClass == 1) {
+            		fp++;
+            	} else if (realClass == -1) {
+            		fn++;
+            	}
+            }
+        }
+
+		Evaluator.writeToFile(Evaluator.FILENAME, "True positive: " + tp + "\r\n");
+		Evaluator.writeToFile(Evaluator.FILENAME, "False positive: " + fp + "\r\n");
+		Evaluator.writeToFile(Evaluator.FILENAME, "True NEGATIVE: " + tn + "\r\n");
+		Evaluator.writeToFile(Evaluator.FILENAME, "False NEGATIVE: " + fn + "\r\n");
+	}
+	
+	public static void evaluateTestError(LibSVM trainedClassifier, Dataset testData, String username) {
+		clearResults();
+		
+		//Map<Object, PerformanceMeasure> pm = EvaluateDataset.testDataset(trainedClassifier, testData);
 		String header = "\r\nEVALUATE_DATASET:: Test dataset results for person p = " + username + "\r\n";
 		Evaluator.writeToFile(Evaluator.FILENAME, header);
-		Evaluator.printPerformance(pm);
+		evaluateDataset(trainedClassifier, testData, username);
+		
+		//Evaluator.printPerformance(pm);
 		/*Map<Object, PerformanceMeasure> pm2 = Evaluator.crossValidate(testData, trainedClassifier);
 		Log.i("eval", "CrossValidate:: Test dataset results for person p = " + p.getUsername());
 		Evaluator.printPerformance(pm2);*/
 		//for(Object o:pm.keySet()) Log.d("evaluate", o+": "+pm.get(o).getAccuracy());
 	}
 
-	public static void evaluateTrainError(Classifier trainedClassifier, Dataset trainData, String username) {
-		Map<Object, PerformanceMeasure> pm = EvaluateDataset.testDataset(trainedClassifier, trainData);
+	public static void evaluateTrainError(LibSVM trainedClassifier, Dataset trainData, String username) {
+		clearResults();
+		//Map<Object, PerformanceMeasure> pm = EvaluateDataset.testDataset(trainedClassifier, trainData);
 		String header = "TRAINING dataset results for person p = " + username + "\r\n";
 		Evaluator.writeToFile(Evaluator.FILENAME, header);
-		Evaluator.printPerformance(pm);
+		evaluateDataset(trainedClassifier, trainData, username);
+		//Evaluator.printPerformance(pm);
 		/*Map<Object, PerformanceMeasure> pm2 = Evaluator.crossValidate(trainData, trainedClassifier);
 		Log.i("eval", "CrossValidate:: TRAIN results for person p = " + p.getUsername());
 		Evaluator.printPerformance(pm2);*/
@@ -201,7 +255,6 @@ public class FeatureUtils {
 			features[tapNum * FEATURES_PER_TAP + 1] = (double) t.getDuration();
 			features[tapNum * FEATURES_PER_TAP + 2] = t.getSize();
 			//features[tapNum * FEATURES_PER_TAP + 3] = t.getPressure();
-
 			tapNum++;
 		}
 
@@ -209,6 +262,8 @@ public class FeatureUtils {
 		for(int i = 0; i < accelStats.size();i++){
 			features[nonAccelCount + i] = accelStats.get(i);
 		}
+		
+		features[0] = 1; // hack to make sure first latency of zero doesn't become NaN w/ normalization
 
 		return features;
 	}
@@ -256,6 +311,11 @@ public class FeatureUtils {
 			energyFeatures.addAll(accelEnergies);
 			start = end;
 		}
+		
+		// Get last chunk of accel values
+		List<AccelerometerData> points = accel.subList(start, accel.size());
+		ArrayList<Double> accelEnergies = FeatureUtils.xyzEnergy(points);
+		energyFeatures.addAll(accelEnergies);
 		
 		return energyFeatures;
 	}
