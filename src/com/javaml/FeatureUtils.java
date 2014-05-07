@@ -53,8 +53,9 @@ public class FeatureUtils {
 		
 	}
 
-	public static void evaluateDataset(LibSVM trainedClassifier, Dataset testData, String username) {
+	public static void evaluateDataset(Classifier trainedClassifier, Dataset testData, String username) {
 		clearResults();
+		//LibSVM svm = (LibSVM) trainedClassifier;
         /* Classify all instances and check with the correct class values */
         for (Instance inst : testData) {
             Object predictedClassValue = trainedClassifier.classify(inst);
@@ -70,9 +71,9 @@ public class FeatureUtils {
             }
             else {
             	if (realClass == 1) {
-            		fp++;
-            	} else if (realClass == -1) {
             		fn++;
+            	} else if (realClass == -1) {
+            		fp++;
             	}
             }
         }
@@ -81,9 +82,11 @@ public class FeatureUtils {
 		Evaluator.writeToFile(Evaluator.FILENAME, "False positive: " + fp + "\r\n");
 		Evaluator.writeToFile(Evaluator.FILENAME, "True NEGATIVE: " + tn + "\r\n");
 		Evaluator.writeToFile(Evaluator.FILENAME, "False NEGATIVE: " + fn + "\r\n");
+		Evaluator.writeToFile(Evaluator.FILENAME, "False Rejection (User) Rate: " + (double)fn/(tp+fn) + "\r\n");
+		Evaluator.writeToFile(Evaluator.FILENAME, "False Acceptane Rate: " + (double)fp/(tn+fp) + "\r\n");
 	}
 	
-	public static void evaluateTestError(LibSVM trainedClassifier, Dataset testData, String username) {
+	public static void evaluateTestError(Classifier trainedClassifier, Dataset testData, String username) {
 		clearResults();
 		
 		//Map<Object, PerformanceMeasure> pm = EvaluateDataset.testDataset(trainedClassifier, testData);
@@ -98,7 +101,7 @@ public class FeatureUtils {
 		//for(Object o:pm.keySet()) Log.d("evaluate", o+": "+pm.get(o).getAccuracy());
 	}
 
-	public static void evaluateTrainError(LibSVM trainedClassifier, Dataset trainData, String username) {
+	public static void evaluateTrainError(Classifier trainedClassifier, Dataset trainData, String username) {
 		clearResults();
 		//Map<Object, PerformanceMeasure> pm = EvaluateDataset.testDataset(trainedClassifier, trainData);
 		String header = "TRAINING dataset results for person p = " + username + "\r\n";
@@ -157,6 +160,7 @@ public class FeatureUtils {
 			double[] featureVector = vectorForAttempt(a);
 			Instance instance = new DenseInstance(featureVector, 1);
 			//Log.i("feature", "Feature vector: " + Arrays.toString(featureVector));
+			dataset.add(instance);
 			dataset.add(instance);
 		}
 

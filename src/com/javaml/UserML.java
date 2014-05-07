@@ -17,7 +17,7 @@ public class UserML {
 	private Dataset trainSet;
 	private Dataset testSet;
 	private NormalizeMean normalizer;
-	private LibSVM classifier;
+	private Classifier classifier;
 	private TapClassifiers classifierSet;
 	private Person self;
 	
@@ -46,7 +46,7 @@ public class UserML {
 		}
 
 		Evaluator.writeToFile(Evaluator.FILENAME, "\nTraining set size = " + trainSet.size());
-		classifier = classifierSet.makeSvm(trainSet);
+		classifier = classifierSet.makeRandomForest(trainSet);
 	}
 	
 	public boolean classifyAttempt(Attempt attempt) {
@@ -79,7 +79,7 @@ public class UserML {
 		this.testSet = testSet;
 	}
 
-	public LibSVM getClassifier() {
+	public Classifier getClassifier() {
 		return classifier;
 	}
 
