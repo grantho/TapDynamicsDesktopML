@@ -1,0 +1,480 @@
+
+Training set size = 78
+EVALUATE_DATASET:: Test dataset results for person p = volunteer5763
+True positive: 14
+False positive: 7
+True NEGATIVE: 707
+False NEGATIVE: 7
+False Rejection (User) Rate: 0.3333333333333333
+False Acceptane Rate: 0.00980392156862745
+TRAINING dataset results for person p = volunteer5763
+True positive: 20
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 76
+EVALUATE_DATASET:: Test dataset results for person p = volunteer9920
+True positive: 12
+False positive: 27
+True NEGATIVE: 688
+False NEGATIVE: 7
+False Rejection (User) Rate: 0.3684210526315789
+False Acceptane Rate: 0.03776223776223776
+TRAINING dataset results for person p = volunteer9920
+True positive: 18
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 77
+EVALUATE_DATASET:: Test dataset results for person p = volunteer7059
+True positive: 16
+False positive: 56
+True NEGATIVE: 658
+False NEGATIVE: 4
+False Rejection (User) Rate: 0.2
+False Acceptane Rate: 0.0784313725490196
+TRAINING dataset results for person p = volunteer7059
+True positive: 19
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 75
+EVALUATE_DATASET:: Test dataset results for person p = volunteer4727
+True positive: 4
+False positive: 33
+True NEGATIVE: 683
+False NEGATIVE: 13
+False Rejection (User) Rate: 0.7647058823529411
+False Acceptane Rate: 0.046089385474860335
+TRAINING dataset results for person p = volunteer4727
+True positive: 16
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 1
+False Rejection (User) Rate: 0.058823529411764705
+False Acceptane Rate: 0.0
+
+Training set size = 75
+EVALUATE_DATASET:: Test dataset results for person p = volunteer1994
+True positive: 14
+False positive: 12
+True NEGATIVE: 704
+False NEGATIVE: 3
+False Rejection (User) Rate: 0.17647058823529413
+False Acceptane Rate: 0.01675977653631285
+TRAINING dataset results for person p = volunteer1994
+True positive: 17
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 75
+EVALUATE_DATASET:: Test dataset results for person p = volunteer217
+True positive: 17
+False positive: 17
+True NEGATIVE: 697
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.023809523809523808
+TRAINING dataset results for person p = volunteer217
+True positive: 17
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 76
+EVALUATE_DATASET:: Test dataset results for person p = volunteer8062
+True positive: 17
+False positive: 4
+True NEGATIVE: 710
+False NEGATIVE: 1
+False Rejection (User) Rate: 0.05555555555555555
+False Acceptane Rate: 0.0056022408963585435
+TRAINING dataset results for person p = volunteer8062
+True positive: 18
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 75
+EVALUATE_DATASET:: Test dataset results for person p = volunteer1642
+True positive: 17
+False positive: 0
+True NEGATIVE: 714
+False NEGATIVE: 1
+False Rejection (User) Rate: 0.05555555555555555
+False Acceptane Rate: 0.0
+TRAINING dataset results for person p = volunteer1642
+True positive: 17
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 76
+EVALUATE_DATASET:: Test dataset results for person p = volunteer465
+True positive: 11
+False positive: 13
+True NEGATIVE: 701
+False NEGATIVE: 7
+False Rejection (User) Rate: 0.3888888888888889
+False Acceptane Rate: 0.018207282913165267
+TRAINING dataset results for person p = volunteer465
+True positive: 18
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 75
+EVALUATE_DATASET:: Test dataset results for person p = volunteer3363
+True positive: 4
+False positive: 23
+True NEGATIVE: 692
+False NEGATIVE: 14
+False Rejection (User) Rate: 0.7777777777777778
+False Acceptane Rate: 0.032167832167832165
+TRAINING dataset results for person p = volunteer3363
+True positive: 17
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 77
+EVALUATE_DATASET:: Test dataset results for person p = volunteer3507
+True positive: 8
+False positive: 30
+True NEGATIVE: 684
+False NEGATIVE: 11
+False Rejection (User) Rate: 0.5789473684210527
+False Acceptane Rate: 0.04201680672268908
+TRAINING dataset results for person p = volunteer3507
+True positive: 19
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 76
+EVALUATE_DATASET:: Test dataset results for person p = volunteer3521
+True positive: 17
+False positive: 26
+True NEGATIVE: 690
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.036312849162011177
+TRAINING dataset results for person p = volunteer3521
+True positive: 18
+False positive: 1
+True NEGATIVE: 57
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.017241379310344827
+
+Training set size = 75
+EVALUATE_DATASET:: Test dataset results for person p = volunteer1197
+True positive: 14
+False positive: 12
+True NEGATIVE: 703
+False NEGATIVE: 3
+False Rejection (User) Rate: 0.17647058823529413
+False Acceptane Rate: 0.016783216783216783
+TRAINING dataset results for person p = volunteer1197
+True positive: 17
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 76
+EVALUATE_DATASET:: Test dataset results for person p = volunteer1504
+True positive: 16
+False positive: 16
+True NEGATIVE: 698
+False NEGATIVE: 2
+False Rejection (User) Rate: 0.1111111111111111
+False Acceptane Rate: 0.022408963585434174
+TRAINING dataset results for person p = volunteer1504
+True positive: 18
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 75
+EVALUATE_DATASET:: Test dataset results for person p = volunteer2987
+True positive: 15
+False positive: 2
+True NEGATIVE: 713
+False NEGATIVE: 3
+False Rejection (User) Rate: 0.16666666666666666
+False Acceptane Rate: 0.002797202797202797
+TRAINING dataset results for person p = volunteer2987
+True positive: 17
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 76
+EVALUATE_DATASET:: Test dataset results for person p = volunteer6253
+True positive: 16
+False positive: 36
+True NEGATIVE: 678
+False NEGATIVE: 2
+False Rejection (User) Rate: 0.1111111111111111
+False Acceptane Rate: 0.05042016806722689
+TRAINING dataset results for person p = volunteer6253
+True positive: 18
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 77
+EVALUATE_DATASET:: Test dataset results for person p = volunteer6106
+True positive: 12
+False positive: 27
+True NEGATIVE: 687
+False NEGATIVE: 7
+False Rejection (User) Rate: 0.3684210526315789
+False Acceptane Rate: 0.037815126050420166
+TRAINING dataset results for person p = volunteer6106
+True positive: 19
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 73
+EVALUATE_DATASET:: Test dataset results for person p = volunteer4259
+True positive: 8
+False positive: 15
+True NEGATIVE: 699
+False NEGATIVE: 8
+False Rejection (User) Rate: 0.5
+False Acceptane Rate: 0.02100840336134454
+TRAINING dataset results for person p = volunteer4259
+True positive: 15
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 78
+EVALUATE_DATASET:: Test dataset results for person p = volunteer5701
+True positive: 18
+False positive: 29
+True NEGATIVE: 685
+False NEGATIVE: 2
+False Rejection (User) Rate: 0.1
+False Acceptane Rate: 0.04061624649859944
+TRAINING dataset results for person p = volunteer5701
+True positive: 20
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 78
+EVALUATE_DATASET:: Test dataset results for person p = volunteer983
+True positive: 16
+False positive: 26
+True NEGATIVE: 688
+False NEGATIVE: 4
+False Rejection (User) Rate: 0.2
+False Acceptane Rate: 0.036414565826330535
+TRAINING dataset results for person p = volunteer983
+True positive: 20
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 76
+EVALUATE_DATASET:: Test dataset results for person p = volunteer590
+True positive: 13
+False positive: 9
+True NEGATIVE: 705
+False NEGATIVE: 6
+False Rejection (User) Rate: 0.3157894736842105
+False Acceptane Rate: 0.012605042016806723
+TRAINING dataset results for person p = volunteer590
+True positive: 18
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 77
+EVALUATE_DATASET:: Test dataset results for person p = volunteer1709
+True positive: 17
+False positive: 18
+True NEGATIVE: 696
+False NEGATIVE: 3
+False Rejection (User) Rate: 0.15
+False Acceptane Rate: 0.025210084033613446
+TRAINING dataset results for person p = volunteer1709
+True positive: 19
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 78
+EVALUATE_DATASET:: Test dataset results for person p = volunteer2019
+True positive: 13
+False positive: 80
+True NEGATIVE: 634
+False NEGATIVE: 8
+False Rejection (User) Rate: 0.38095238095238093
+False Acceptane Rate: 0.11204481792717087
+TRAINING dataset results for person p = volunteer2019
+True positive: 20
+False positive: 1
+True NEGATIVE: 57
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.017241379310344827
+
+Training set size = 79
+EVALUATE_DATASET:: Test dataset results for person p = volunteer4467
+True positive: 21
+False positive: 55
+True NEGATIVE: 659
+False NEGATIVE: 1
+False Rejection (User) Rate: 0.045454545454545456
+False Acceptane Rate: 0.07703081232492998
+TRAINING dataset results for person p = volunteer4467
+True positive: 21
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 77
+EVALUATE_DATASET:: Test dataset results for person p = volunteer1321
+True positive: 18
+False positive: 28
+True NEGATIVE: 686
+False NEGATIVE: 1
+False Rejection (User) Rate: 0.05263157894736842
+False Acceptane Rate: 0.0392156862745098
+TRAINING dataset results for person p = volunteer1321
+True positive: 19
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 83
+EVALUATE_DATASET:: Test dataset results for person p = volunteer988
+True positive: 24
+False positive: 35
+True NEGATIVE: 680
+False NEGATIVE: 2
+False Rejection (User) Rate: 0.07692307692307693
+False Acceptane Rate: 0.04895104895104895
+TRAINING dataset results for person p = volunteer988
+True positive: 25
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 77
+EVALUATE_DATASET:: Test dataset results for person p = volunteer8000
+True positive: 7
+False positive: 34
+True NEGATIVE: 680
+False NEGATIVE: 13
+False Rejection (User) Rate: 0.65
+False Acceptane Rate: 0.047619047619047616
+TRAINING dataset results for person p = volunteer8000
+True positive: 19
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 80
+EVALUATE_DATASET:: Test dataset results for person p = volunteer4885
+True positive: 21
+False positive: 9
+True NEGATIVE: 705
+False NEGATIVE: 2
+False Rejection (User) Rate: 0.08695652173913043
+False Acceptane Rate: 0.012605042016806723
+TRAINING dataset results for person p = volunteer4885
+True positive: 22
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 77
+EVALUATE_DATASET:: Test dataset results for person p = volunteer9510
+True positive: 18
+False positive: 34
+True NEGATIVE: 680
+False NEGATIVE: 2
+False Rejection (User) Rate: 0.1
+False Acceptane Rate: 0.047619047619047616
+TRAINING dataset results for person p = volunteer9510
+True positive: 19
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
+
+Training set size = 79
+EVALUATE_DATASET:: Test dataset results for person p = volunteer9520
+True positive: 19
+False positive: 6
+True NEGATIVE: 708
+False NEGATIVE: 2
+False Rejection (User) Rate: 0.09523809523809523
+False Acceptane Rate: 0.008403361344537815
+TRAINING dataset results for person p = volunteer9520
+True positive: 21
+False positive: 0
+True NEGATIVE: 58
+False NEGATIVE: 0
+False Rejection (User) Rate: 0.0
+False Acceptane Rate: 0.0
