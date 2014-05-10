@@ -16,6 +16,8 @@ public class Main {
 		// Use Java ML methods (copy + paste FeatureUtils + Tap Classifiers) to train and test the classifiers
 		try {
 			Database db = new Database();
+			//db.deleteLatencyOutlier();
+			//db.deleteIncomplete();
 			DesktopML ml = new DesktopML(db);
 			
 			ml.createClassifiers();
