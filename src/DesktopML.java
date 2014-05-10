@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.javaml.Evaluator;
 import com.javaml.FeatureUtils;
 import com.javaml.UserML;
 import com.javaml.data.Database;
@@ -26,6 +27,7 @@ public class DesktopML {
 	 */
 	public void createClassifiers() throws SQLException {
 		List<Person> people = db.getPeople(1111);
+		Evaluator.FILENAME = "resuls1111.txt";
 		for (Person user : people) {
 			String username = user.getUsername();
 			
@@ -33,7 +35,17 @@ public class DesktopML {
 			userML.trainClassifier(user);
 			FeatureUtils.evaluateTestError(userML.getClassifier(), userML.getTestSet(), username);
 			FeatureUtils.evaluateTrainError(userML.getClassifier(), userML.getTrainSet(), username);
-			//Classifier rf = classifierSet.makeRandomForest(p);
+		}
+		
+		people = db.getPeople(1234);
+		Evaluator.FILENAME = "resuls1234.txt";
+		for (Person user : people) {
+			String username = user.getUsername();
+			
+			userML = new UserML();
+			userML.trainClassifier(user);
+			FeatureUtils.evaluateTestError(userML.getClassifier(), userML.getTestSet(), username);
+			FeatureUtils.evaluateTrainError(userML.getClassifier(), userML.getTrainSet(), username);
 		}
 	}
 }

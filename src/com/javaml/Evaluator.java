@@ -18,7 +18,7 @@ import net.sf.javaml.featureselection.subset.GreedyForwardSelection;
 
 public class Evaluator {
 	private static final int FOLDS = 10;
-	public static final String FILENAME = "results.txt";
+	public static String FILENAME = "results.txt";
 	
 	public static void writeToFile(String fileName, String data) {
 		try{
