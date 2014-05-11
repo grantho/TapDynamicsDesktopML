@@ -1,11 +1,13 @@
 package com.javaml;
 
 import libsvm.LibSVM;
+import libsvm.SelfOptimizingLinearLibSVM;
 import libsvm.svm_parameter;
 import net.sf.javaml.classification.Classifier;
 import net.sf.javaml.classification.bayes.NaiveBayesClassifier;
 import net.sf.javaml.classification.tree.RandomForest;
 import net.sf.javaml.core.Dataset;
+import net.sf.javaml.filter.discretize.EqualWidthBinning;
 import net.sf.javaml.tools.weka.WekaClassifier;
 
 public class TapClassifiers {
@@ -42,9 +44,9 @@ public class TapClassifiers {
 		param.weight[1] = 1;
 	}
 	
-	public LibSVM makeSvm(Dataset trainSet) {
-		LibSVM svm = new LibSVM();
-		svm.setParameters(param);
+	public Classifier makeSvm(Dataset trainSet) {
+		Classifier svm = new SelfOptimizingLinearLibSVM();
+		//svm.setParameters(param);
 		svm.buildClassifier(trainSet);
 		return svm;
 	}
@@ -62,6 +64,7 @@ public class TapClassifiers {
 		//Log.w("ml", "Feature vector has "+data.get(0).size() + "features");
 		//binner.build(data);
 		//binner.filter(data);
+		/* Load a data set */
 		NaiveBayesClassifier nb = new NaiveBayesClassifier(true, true, false);
 		nb.buildClassifier(trainSet);
 		// Print out diagnostics

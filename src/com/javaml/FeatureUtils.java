@@ -20,6 +20,7 @@ import net.sf.javaml.classification.evaluation.PerformanceMeasure;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 import com.j256.ormlite.dao.Dao;
+import com.javaml.analysis.Utility;
 import com.javaml.data.AccelerometerData;
 import com.javaml.data.Attempt;
 import com.javaml.data.Person;
@@ -27,6 +28,8 @@ import com.javaml.data.Tap;
 
 public class FeatureUtils {
 	// For features we have latency, duration, size, and mean accel (x,y,z)
+	//public static final int FEATURES_PER_TAP = 2; 
+	//public static final int NUM_ACCEL_FEATURES = 0;
 	public static final int FEATURES_PER_TAP = 3; 
 	public static final int NUM_ACCEL_FEATURES = 15;
 	public static final int NUM_NEG_EXAMPLES = 30;
@@ -78,12 +81,12 @@ public class FeatureUtils {
             }
         }
 
-		Evaluator.writeToFile(Evaluator.FILENAME, "True positive: " + tp + "\r\n");
-		Evaluator.writeToFile(Evaluator.FILENAME, "False positive: " + fp + "\r\n");
-		Evaluator.writeToFile(Evaluator.FILENAME, "True NEGATIVE: " + tn + "\r\n");
-		Evaluator.writeToFile(Evaluator.FILENAME, "False NEGATIVE: " + fn + "\r\n");
-		Evaluator.writeToFile(Evaluator.FILENAME, "False Rejection (User) Rate: " + (double)fn/(tp+fn) + "\r\n");
-		Evaluator.writeToFile(Evaluator.FILENAME, "False Acceptane Rate: " + (double)fp/(tn+fp) + "\r\n");
+		Utility.writeToFile(Evaluator.FILENAME, "True positive: " + tp + "\r\n");
+		Utility.writeToFile(Evaluator.FILENAME, "False positive: " + fp + "\r\n");
+		Utility.writeToFile(Evaluator.FILENAME, "True NEGATIVE: " + tn + "\r\n");
+		Utility.writeToFile(Evaluator.FILENAME, "False NEGATIVE: " + fn + "\r\n");
+		Utility.writeToFile(Evaluator.FILENAME, "False Rejection (User) Rate: " + (double)fn/(tp+fn) + "\r\n");
+		Utility.writeToFile(Evaluator.FILENAME, "False Acceptane Rate: " + (double)fp/(tn+fp) + "\r\n");
 	}
 	
 	public static void evaluateTestError(Classifier trainedClassifier, Dataset testData, String username) {
@@ -91,7 +94,7 @@ public class FeatureUtils {
 		
 		//Map<Object, PerformanceMeasure> pm = EvaluateDataset.testDataset(trainedClassifier, testData);
 		String header = "\r\nEVALUATE_DATASET:: Test dataset results for person p = " + username + "\r\n";
-		Evaluator.writeToFile(Evaluator.FILENAME, header);
+		Utility.writeToFile(Evaluator.FILENAME, header);
 		evaluateDataset(trainedClassifier, testData, username);
 		
 		//Evaluator.printPerformance(pm);
@@ -105,7 +108,7 @@ public class FeatureUtils {
 		clearResults();
 		//Map<Object, PerformanceMeasure> pm = EvaluateDataset.testDataset(trainedClassifier, trainData);
 		String header = "TRAINING dataset results for person p = " + username + "\r\n";
-		Evaluator.writeToFile(Evaluator.FILENAME, header);
+		Utility.writeToFile(Evaluator.FILENAME, header);
 		evaluateDataset(trainedClassifier, trainData, username);
 		//Evaluator.printPerformance(pm);
 		/*Map<Object, PerformanceMeasure> pm2 = Evaluator.crossValidate(trainData, trainedClassifier);
@@ -161,7 +164,6 @@ public class FeatureUtils {
 			Instance instance = new DenseInstance(featureVector, 1);
 			//Log.i("feature", "Feature vector: " + Arrays.toString(featureVector));
 			dataset.add(instance);
-			dataset.add(instance);
 		}
 
 		//normalizer.filter(dataset);
@@ -183,8 +185,9 @@ public class FeatureUtils {
 			}
 
 			int start, end;
+			int trainStart = 4;
 			if(trainSet) {
-				start = 3;
+				start = trainStart;
 				end = 5;
 				//end = otherAttempts.size()/2;
 			} else {
@@ -193,6 +196,14 @@ public class FeatureUtils {
 				end = otherAttempts.size();
 			}
 			for(int i = start; i < end; i++){
+				Attempt a = otherAttempts.get(i);
+				if(a.getTaps().size() != 5) continue;
+				if(a.getMode() == Attempt.USER_MODE) continue;
+
+				Instance instance = new DenseInstance(vectorForAttempt(a), -1);
+				dataset.add(instance);
+			}
+			for (int i = 0; i < trainStart; i++) {
 				Attempt a = otherAttempts.get(i);
 				if(a.getTaps().size() != 5) continue;
 				if(a.getMode() == Attempt.USER_MODE) continue;
@@ -311,14 +322,14 @@ public class FeatureUtils {
 		for (int i = 0; i < NUM_TAPS - 1; i++) {
 			end += numPoints;
 			List<AccelerometerData> points = accel.subList(start, end);
-			ArrayList<Double> accelEnergies = FeatureUtils.xyzEnergy(points);
+			ArrayList<Double> accelEnergies = FeatureUtils.xyzEnergy(points, numPoints);
 			energyFeatures.addAll(accelEnergies);
 			start = end;
 		}
 		
 		// Get last chunk of accel values
 		List<AccelerometerData> points = accel.subList(start, accel.size());
-		ArrayList<Double> accelEnergies = FeatureUtils.xyzEnergy(points);
+		ArrayList<Double> accelEnergies = FeatureUtils.xyzEnergy(points, accel.size() - start);
 		energyFeatures.addAll(accelEnergies);
 		
 		return energyFeatures;
@@ -328,7 +339,7 @@ public class FeatureUtils {
 	// of their x, y, and z values. Finally computes the "energy under the curve" for
 	// each of the x, y, z lists and returns a three-element array that contains the
 	// energy values for each x, y, z curve from the list of accelerometerdata points 
-	private static ArrayList<Double> xyzEnergy(List<AccelerometerData> accelPoints) {
+	private static ArrayList<Double> xyzEnergy(List<AccelerometerData> accelPoints, int numPoints) {
 		ArrayList<Double> xyz = new ArrayList<Double>(3);
 		
 		ArrayList<Double> x = new ArrayList<Double>();
@@ -341,9 +352,9 @@ public class FeatureUtils {
 			z.add((double)point.getZ());
 		}
 		
-		xyz.add(FeatureUtils.computeEnergy(x));
-		xyz.add(FeatureUtils.computeEnergy(y));
-		xyz.add(FeatureUtils.computeEnergy(z));
+		xyz.add(FeatureUtils.computeEnergy(x)/numPoints);
+		xyz.add(FeatureUtils.computeEnergy(y)/numPoints);
+		xyz.add(FeatureUtils.computeEnergy(z)/numPoints);
 		
 		return xyz;
 	}
